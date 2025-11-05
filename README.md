@@ -13,20 +13,6 @@ Balancer V2 Vault supports two swap modes:
 - `GIVEN_IN`: User specifies input, Vault calculates output
 - `GIVEN_OUT`: User specifies output, Vault calculates input ← **exploited**
 
-When pool liquidity is minimal, the input calculation suffers precision loss:
-
-```solidity
-// Vault calculates: amountIn = f(amountOut, poolReserves)
-// At low liquidity → precision degrades → rounding favors attacker
-
-Example (rsETH/WETH):
-  Requested output: 1,176,332,457,006,284,629,565 rsETH
-  Expected BPT:     ~1,176,332,457,006,284,629,565
-  Actual BPT paid:  1,201,076,805,421,509,281,395
-
-  Rounding loss: 2.1% in attacker's favor
-```
-
 Each swap drains reserves → subsequent swaps have worse precision → compounding effect.
 
 ## Attack Flow
@@ -48,8 +34,6 @@ Each swap drains reserves → subsequent swaps have worse precision → compound
 4. FINAL EXTRACTION
    ├─ Additional 95% iterative drainage swaps
    └─ manageUserBalance() to withdraw all internal balances
-
-Result: ~12,413 ETH extracted
 ```
 
 ## Key Code: swap() Function
@@ -113,25 +97,6 @@ ComposableStablePool includes BPT as a pool token (self-referencing), creating a
 BPT Balance: 2,596,148,429,267,246,421,190,322,186,977,861
 ```
 
-## Exploit Results (PoC on block 23717101)
-
-**Pool 1: rsETH/WETH (WeightedPool)**
-- Extracted: 891 WETH + 1,192 rsETH (~2,084 ETH)
-- Drainage: 99% WETH, 99% rsETH
-- Swaps: 22 successful + 14 iterative
-
-**Pool 2: osETH/WETH (ComposableStablePool)**
-- Extracted: 4,921 WETH + 1,188 osETH (~6,110 ETH)
-- Drainage: 99% WETH, 17% osETH
-- Swaps: 22 successful + 3 iterative
-
-**Pool 3: wstETH/WETH (ComposableStablePool)**
-- Extracted: 3,409 wstETH + 810 WETH (~4,219 ETH)
-- Drainage: 79% wstETH, 40% WETH
-- Swaps: 22 successful + 2 iterative
-
-**Total extracted: ~12,413 ETH (~$25M USD)**
-
 ## Pool State Transitions
 
 ```
@@ -150,60 +115,33 @@ After:   WETH:  514,037,359,753,607,956 (↓ 99%)
          osETH: 5,663,366,633,002,647,619,926 (↓ 17%)
 ```
 
-## Root Cause
 
-1. **No minimum liquidity enforcement** → pools functional at near-zero reserves
-2. **GIVEN_OUT lacks precision guards** → rounding errors unchecked
-3. **No rate limits** → rapid drainage undetected
-4. **Internal balance opacity** → funds hidden until final withdrawal
-
-## Remediation
-
-**Immediate:**
-```solidity
-// Minimum liquidity requirement
-uint256 constant MIN_POOL_BALANCE = 1e18;
-require(poolBalance > MIN_POOL_BALANCE, "INSUFFICIENT_LIQUIDITY");
-
-// Swap size limit
-require(swapAmount < (poolBalance * 10) / 100, "SWAP_TOO_LARGE");
 ```
+-- CONTRACTS
+Vault 0xBA12222222228d8Ba445958a75a0704d566BF2C8
+FeeCollector 0xce88686553686da562ce7cea497ce749da109f9f
 
-**Medium-term:**
-```solidity
-// Disable GIVEN_OUT or restrict heavily
-require(kind == SwapKind.GIVEN_IN, "GIVEN_OUT_DISABLED");
-// OR
-require(amountOut < (reserve * MAX_PERCENT) / 100, "OUTPUT_TOO_LARGE");
+-- ETHEREUM
+PoolId 0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467 (wstETH-rETH-sfrxETH-BPT) contrat : 0x5aEe1e99fE86960377DE9f88689616916D5DcaBe
+PoolId 0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a (weETH/ezETH/rswETH) contrat : 0x848a5564158d84b8A8fb68ab5D004Fae11619A54
+PoolId 0xdfe6e7e18f6cc65fa13c8d8966013d4fda74b6ba000000000000000000000558 (ankrETH/wstETH) contrat : 0xdfE6e7e18f6Cc65FA13C8D8966013d4FdA74b6ba
+PoolId 0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659 (ezETH-WETH-BPT) contrat : 0x596192bB6e41802428Ac943D2f1476C1Af25CC0E
+PoolId 0x740a691bd31c4176bcb6b8a7a40f1a723537d99d0000000000000000000006b6 (cdcETH/wstETH) contrat : 0x740A691bd31c4176BCb6B8A7a40f1A723537D99d
+
+PoolId 0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645 (weETH/rETH) contrat : 0x05ff47AFADa98a98982113758878F9A8B9FddA0a
+PoolId 0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b (wstETH-rETH-sfrxETH-BPT) contrat : 0x42ED016F826165C2e5976fe5bC3df540C5aD0Af7
+PoolId 0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f (rsETH/WETH) contrat : 0x58AAdFB1Afac0ad7fca1148f3cdE6aEDF5236B6D
+PoolId 0xdacf5fa19b1f720111609043ac67a9818262850c000000000000000000000635 (osETH/WETH) contrat : 0xDACf5Fa19b1f720111609043ac67A9818262850c
+PoolId 0x93d199263632a4ef4bb438f1feb99e57b4b5f0bd0000000000000000000005c2 (wstETH/WETH) contrat : 0x93d199263632a4EF4Bb438F1feB99e57b4b5f0BD
+
+-- ARBITRUM
+PoolId 0x4a2f6ae7f3e5d715689530873ec35593dc28951b000000000000000000000481 (wstETH/rETH/cbETH) contrat : 0x4a2F6Ae7F3e5D715689530873ec35593Dc28951B
+
+-- BASE
+PoolId 0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023 (rETH-WETH-BPT) contrat : 0xC771c1a5905420DAEc317b154EB13e4198BA97D0
+PoolId 0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118 (weETH/wETH) contrat : 0xaB99a3e856dEb448eD99713dfce62F937E2d4D74
+PoolId 0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026 (cbETH/WETH) contrat : 0xFb4C2E6E6e27B5b4a07a36360C89EDE29bB3c9B6
 ```
-
-**Long-term:**
-- Circuit breakers for rapid liquidity changes
-- Real-time internal balance monitoring
-- Economic security model (minimum pool value)
-
----
-
-## Attack Details
-
-**Stolen tokens:** ~12,413 ETH (~$25M)
-
-**Attacker:** Unknown (funded via flashloan or existing holdings)
-
-**Pools Exploited:**
-- `0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f` (rsETH/WETH)
-- `0xdacf5fa19b1f720111609043ac67a9818262850c000000000000000000000635` (osETH/WETH)
-- `0x93d199263632a4ef4bb438f1feb99e57b4b5f0bd0000000000000000000005c2` (wstETH/WETH)
-
-**Vault:** `0xBA12222222228d8Ba445958a75a0704d566BF2C8`
-
-**Primary Transaction:** `0x2a0ead4ee9b17a1afa5bfe3dc152833a957f2d25dd9b4b86d68f2c87bdacf69c`
-**Withdrawal Block:** 23717404
-
-**BlockSec Phalcon:**
-https://app.blocksec.com/explorer/tx/eth/0x2a0ead4ee9b17a1afa5bfe3dc152833a957f2d25dd9b4b86d68f2c87bdacf69c
-
----
 
 ## Post-Mortem Resources
 
