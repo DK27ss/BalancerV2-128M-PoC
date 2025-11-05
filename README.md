@@ -7,13 +7,34 @@ The attacker leveraged a rounding manipulation in BPT (Balancer Pool Token) rate
 
 The exploit abused precision loss in the Vault's `swap()` function when using `SwapKind.GIVEN_OUT`, where the attacker specifies exact output amounts and the Vault calculates required input (BPT). At minimal liquidity, rounding errors favor the attacker, allowing extraction of more tokens than BPT paid justifies.
 
-## Vulnerability: Rounding Manipulation in GIVEN_OUT Swaps
+## Rounding Manipulation in GIVEN_OUT Swaps
 
 Balancer V2 Vault supports two swap modes:
 - `GIVEN_IN`: User specifies input, Vault calculates output
 - `GIVEN_OUT`: User specifies output, Vault calculates input ← **exploited**
 
+      GIVEN_IN ("Given In"): the caller specifies the exact amount of the input token, and the pool calculates the corresponding output amount.
+      GIVEN_OUT ("Given Out"): the caller specifies the desired output amount, and the pool computes the required input amount.
+
+Typically, a batchSwap() consists of multiple token-to-token swaps executed via the onSwap() function. The following outlines the execution path when a SwapRequest is assigned a GIVEN_OUT swap type (note that ComposableStablePool inherits from BaseGeneralPool):
+
+<img width="3877" height="2475" alt="onswap_control_flow_fca75c65d4" src="https://github.com/user-attachments/assets/a5ce90e0-7e9f-4555-bb9b-5b3ec94f64e5" />
+
 Each swap drains reserves → subsequent swaps have worse precision → compounding effect.
+
+The underlying issue arises from the rounding-down operation performed during upscaling in the `BaseGeneralPool._swapGivenOut()` function. In particular, `_swapGivenOut()` incorrectly rounds down swapRequest.amount through the `_upscale()` function. The resulting rounded value is subsequently used as amountOut when calculating amountIn via `_onSwapGivenOut()`. This behavior contradicts the standard practice that rounding should be applied in a manner that benefits the protocol.
+
+<img width="830" height="327" alt="swap_Given_Out_72f3d62af0" src="https://github.com/user-attachments/assets/3e51746e-67b3-48c1-bbb7-c2422ee233d9" />
+
+Therefore, for a given pool `(wstETH/rETH/cbETH)`, the computed amountIn underestimates the actual required input. This allows a user to exchange a smaller quantity of one underlying asset (e.g., wstETH) for another (e.g., cbETH), thereby decreasing the `invariant D` as a result of reduced effective liquidity. Consequently, the price of the corresponding `BPT` (wstETH/rETH/cbETH) becomes `deflated`, since `BPT price = D / totalSupply`.
+
+Step 1: The attacker swaps BPT (wstETH/rETH/cbETH) for underlying assets to precisely adjust the balance of one token (cbETH) to the edge of a rounding boundary `(amount = 9)`. This sets up the conditions for precision loss in the next step.
+
+Step 2: The attacker then swaps between another underlying (wstETH) and `cbETH` using a crafted amount `(= 8)`. Due to rounding down when scaling token amounts, the computed Δx becomes slightly smaller `(8.918 to 8)`, leading to an underestimated Δy and thus a smaller invariant (D from Curve’s StableSwap model). Since `BPT price = D / totalSupply`, the BPT price becomes artificially deflated.
+
+<img width="803" height="365" alt="attack_steps_e83826303b" src="https://github.com/user-attachments/assets/eabacfbd-4f65-4660-baa2-d8c16918b6d2" />
+
+Step 3: The attacker reverse-swaps the underlying assets back into `BPT`, restoring balance while profiting from the deflated `BPT price`.
 
 ## Attack Flow
 
@@ -22,7 +43,7 @@ Each swap drains reserves → subsequent swaps have worse precision → compound
    ├─ Acquire BPT tokens
    └─ Approve Vault
 
-2. DRAINAGE (22-90 swaps per pool)
+2. DRAINAGE (22-110 swaps per pool)
    ├─ Execute GIVEN_OUT: BPT → rsETH/osETH/wstETH
    ├─ Execute GIVEN_OUT: BPT → WETH
    └─ Set toInternalBalance: true (hide extraction)
@@ -142,10 +163,3 @@ PoolId 0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023 (rETH-
 PoolId 0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118 (weETH/wETH) contrat : 0xaB99a3e856dEb448eD99713dfce62F937E2d4D74
 PoolId 0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026 (cbETH/WETH) contrat : 0xFb4C2E6E6e27B5b4a07a36360C89EDE29bB3c9B6
 ```
-
-## Post-Mortem Resources
-
-- Balancer V2 Vault Docs: https://docs.balancer.fi/concepts/vault
-- ComposableStablePool: https://docs.balancer.fi/concepts/pools/composable-stable
-- Rounding vulnerabilities in AMMs research
-- Flash loan attack patterns documentation
