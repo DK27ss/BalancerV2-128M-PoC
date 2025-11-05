@@ -1,5 +1,7 @@
-# BalancerV2-120M-PoC
+# BalancerV2-180M-PoC
 BalancerV2 Rounding Exploit PoC
+
+![G42F9f5a8AAyjTt](https://github.com/user-attachments/assets/761390a0-b313-4648-819a-cf22cc7b6b0d)
 
 Balancer V2, a decentralized automated market maker (AMM) protocol, lost approximately $25 million (~12,413 ETH) after an attacker exploited a precision rounding vulnerability in multiple pools. The attack occurred on **May 1, 2025** across blocks 23717101-23717404 on Ethereum mainnet.
 
