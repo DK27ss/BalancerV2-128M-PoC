@@ -209,8 +209,6 @@ contract BalancerRsEthWethPoolTest is Test {
         swaps[89] = ExactSwapData({ tokenIn: address(WETH), tokenOut: rsETH_WETH_BPT, amount: 990619479082334998746, expectedIn: 12103545600526537726, indexIn: 2, indexOut: 0 });
 
         console.log("Total swaps:", swaps.length);
-        console.log("All swaps use kind=GIVEN_OUT (specify output, pay variable input)");
-
         uint256 successCount = 0;
 
         for (uint i = 0; i < swaps.length; i++) {
