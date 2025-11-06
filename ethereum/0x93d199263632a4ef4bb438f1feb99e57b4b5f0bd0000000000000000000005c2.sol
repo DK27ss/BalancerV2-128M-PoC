@@ -242,7 +242,7 @@ contract BalancerWstEthWethPoolTest is Test {
 
         // Continue draining the pool until almost empty
         (,uint256[] memory midBalances,) = VAULT.getPoolTokens(POOL_ID_WSTETH);
-        console.log("Pool state before drainage:");
+        console.log("POOL STATE BEFORE:");
         console.log("  WETH (index 0):", midBalances[0]);
         console.log("  wstETH (index 2):", midBalances[2]);
 
@@ -298,9 +298,9 @@ contract BalancerWstEthWethPoolTest is Test {
             if (additionalSwaps > 100) break;
         }
 
-        console.log("Additional drainage swaps:", additionalSwaps);
+        console.log("Additional swaps:", additionalSwaps);
 
-        // WITHDRAWAL VIA manageUserBalance()
+        // withdraw manageUserBalance()
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(address(WETH));
         internalTokens[1] = IERC20(wstETH_WETH_BPT);
