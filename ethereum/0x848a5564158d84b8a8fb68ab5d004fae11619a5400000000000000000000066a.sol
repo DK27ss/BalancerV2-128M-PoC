@@ -902,7 +902,7 @@ contract BalancerTriplePoolTest is Test {
 
         console.log("Swaps executed:", successCount, "/", swaps.length);
 
-        // Withdrawal via manageUserBalance
+        // withdraw manageUserBalance
         IERC20[] memory internalTokens = new IERC20[](4);
         internalTokens[0] = IERC20(TRIPLE_BPT);
         internalTokens[1] = IERC20(ezETH);
