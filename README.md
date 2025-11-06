@@ -208,26 +208,42 @@ Contract: 0xDACf5Fa19b1f720111609043ac67A9818262850c
 Block: 23717101
 
 Initial State:
-  WETH:  4,922,356,564,867,078,856,521 wei (4,922.36 ETH)
-  osETH: 6,851,581,236,039,298,760,900 wei (6,851.58 ETH)
-  BPT:   2,596,148,429,267,424 tokens
+  WETH (index 0):  4,922,356,564,867,078,856,521 wei (4,922.36 ETH)
+  BPT (index 1):   2,596,148,429,267,421,974,637,745,197,985,291
+  osETH (index 2): 6,851,581,236,039,298,760,900 wei (6,851.58 ETH)
 
 Final State:
-  WETH:  1,912,399,474,364,011 wei (0.0019 ETH)
-  osETH: 607,648,074,601,536 wei (0.0006 ETH)
-  BPT:   2,596,148,429,267,424 tokens
+  WETH:  ~0 wei
+  BPT:   ~2,596,148,429,267,421,974,637,745,197,985,291
+  osETH: ~0 wei
 
 Extraction:
-  WETH drained:  4,623,601,508,853 tokens ≈ 4,623 ETH
-  osETH drained: 6,851,122,954,235 tokens ≈ 6,851 ETH
-  Total: ~6,109 ETH
+  WETH extracted:  4,623 ETH
+  osETH extracted: 6,851 ETH
+
+  Total: ~11,474 ETH
 ```
 
 #### 2. wstETH/WETH Pool
 ```
 Pool ID: 0x93d199263632a4ef4bb438f1feb99e57b4b5f0bd0000000000000000000005c2
 Contract: 0x93d199263632a4EF4Bb438F1feB99e57b4b5f0BD
-Extraction: ~4,219 ETH
+
+Initial State:
+  wstETH (index 0): 4,270,841,022,451,395,518,160 wei (4,270.84 ETH)
+  BPT (index 1):    2,596,148,429,267,825,815,119,599,282,622,812
+  WETH (index 2):   1,977,057,709,608,602,150,017 wei (1,977.06 ETH)
+
+Final State:
+  wstETH: ~0 wei
+  BPT:    ~2,596,148,429,267,825,815,119,599,282,622,812
+  WETH:   ~0 wei
+
+Extraction:
+  wstETH extracted: 4,259 ETH
+  WETH extracted:   1,963 ETH
+
+  Total: ~6,222 ETH
 Type: ComposableStablePool (BPT at index 1)
 ```
 
@@ -235,11 +251,27 @@ Type: ComposableStablePool (BPT at index 1)
 ```
 Pool ID: 0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f
 Contract: 0x58AAdFB1Afac0ad7fca1148f3cdE6aEDF5236B6D
-Before: rsETH: 1,192,977,132,125,824,431,719 wei
-        WETH:  891,081,044,240,689,768,290 wei
-After:  rsETH: 186,036,293 wei (↓ 99.998%)
-        WETH:  1,265,989,959,414 wei (↓ 99.998%)
-Extraction: ~500 ETH
+
+Initial State:
+  BPT:   2,596,148,429,267,450,795,110,561,571,390,003
+  rsETH: 1,192,977,132,125,824,431,719 wei (1,192.98 ETH)
+  WETH:  891,081,044,240,689,768,290 wei (891.08 ETH)
+
+Final State:
+  BPT:   2,596,148,429,269,518,772,219,140,401,518,800
+  rsETH: 186,036,293 wei (0.00000019 ETH)
+  WETH:  1,265,989,959,414 wei (0.0000013 ETH)
+
+Pool Deltas:
+  BPT delta:   +2,067,977,108,578,830,128,797
+  rsETH delta: -1,192,977,132,125,638,395,426 wei
+  WETH delta:  -891,081,042,974,699,808,876 wei
+
+Extraction:
+  rsETH extracted: 1,192 ETH
+  WETH extracted:  891 ETH
+
+  Total: ~2,083 ETH
 Type: WeightedPool
 ```
 
@@ -247,37 +279,121 @@ Type: WeightedPool
 ```
 Pool ID: 0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a
 Contract: 0x848a5564158d84b8A8fb68ab5D004Fae11619A54
-Extraction: ~3,200 ETH
+
+Initial State:
+  BPT:    2,596,148,429,268,072,998,691,221,627,584,336
+  ezETH:  34 ETH
+  weETH:  32 ETH
+  rswETH: 86 ETH
+
+Final State:
+  BPT:    2,596,148,429,268,140,032,469,895,427,901,537
+  ezETH:  2 ETH
+  weETH:  3 ETH
+  rswETH: 85 ETH
+
+Extraction:
+  ezETH extracted:  31 ETH
+  weETH extracted:  28 ETH
+  rswETH extracted: 0 ETH
+
+  Total: ~59 ETH
 ```
 
 #### 5. weETH/rETH Pool
 ```
 Pool ID: 0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645
 Contract: 0x05ff47AFADa98a98982113758878F9A8B9FddA0a
-Initial: 707 rETH + 496 weETH
-Extraction: ~700 ETH
+
+Initial State:
+  BPT:   2,596,148,429,267,578,197,359,306,107,962,432
+  rETH:  707 ETH
+  weETH: 496 ETH
+
+Final State:
+  BPT:   2,596,148,429,268,872,713,054,242,274,930,440
+  rETH:  3 ETH
+  weETH: 0 ETH
+
+Extraction:
+  rETH extracted:  703 ETH
+  weETH extracted: 495 ETH
+
+  Total: ~1,198 ETH
 ```
 
 #### 6-7. wstETH/rETH/sfrxETH Pools (Quad #1 & #2)
 ```
 Pool #1: 0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467
 Contract: 0x5aEe1e99fE86960377DE9f88689616916D5DcaBe
-Extraction: ~1,600 ETH
+
+Initial State:
+  BPT:     2,596,148,429,266,373,209,145,083,915,007,527
+  wstETH:  0 ETH
+  sfrxETH: 4 ETH
+  rETH:    0 ETH
+
+Final State:
+  BPT:     2,596,148,429,266,379,970,928,315,936,291,762
+  wstETH:  0 ETH
+  sfrxETH: 0 ETH
+  rETH:    0 ETH
+
+Extraction:
+  wstETH extracted:  0 ETH
+  sfrxETH extracted: 4 ETH
+  rETH extracted:    0 ETH
+
+  Total: ~4 ETH
+
+------------------------------------------------------------------------
 
 Pool #2: 0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b
 Contract: 0x42ED016F826165C2e5976fe5bC3df540C5aD0Af7
-Extraction: ~800 ETH
+
+Initial State:
+  BPT:     2,596,148,429,267,580,463,942,935,196,878,193
+  wstETH:  203 ETH
+  sfrxETH: 2,265 ETH
+  rETH:    232 ETH
+
+Final State:
+  BPT:     2,596,148,429,270,382,247,078,373,301,460,520
+  wstETH:  11 ETH
+  sfrxETH: 117 ETH
+  rETH:    11 ETH
+
+Extraction:
+  wstETH extracted:  191 ETH
+  sfrxETH extracted: 2,148 ETH
+  rETH extracted:    220 ETH
+
+  Total: ~2,559 ETH
 ```
 
 #### 8. ezETH/WETH Pool
 ```
 Pool ID: 0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659
 Contract: 0x596192bB6e41802428Ac943D2f1476C1Af25CC0E
-Initial: 756 ezETH + 444 WETH
-Extraction: ~756 ETH
+
+Initial State:
+  BPT:  2,596,148,429,268,001,550,290,005,844,565,929
+  ezETH: 756 ETH
+  WETH:  444 ETH
+
+Final State:
+  BPT:  2,596,148,429,269,196,196,829,326,878,149,524
+  ezETH: 5 ETH
+  WETH:  2 ETH
+
+Extraction:
+  ezETH extracted: 751 ETH
+  WETH extracted:  442 ETH
+
+  Pool Total: ~1,193 ETH
 ```
 
-**Ethereum Subtotal: ~17,424 ETH**
+**Ethereum Subtotal: ~24,792 ETH**
 
 ---
 
@@ -351,11 +467,11 @@ Extraction: <1 ETH
 ```
 (These are the current values in relation to the pool and our work, they may change!)
 
-Ethereum (8 pools):      ~17,424 ETH 
+Ethereum (8 pools):      ~24,792 ETH 
 Arbitrum (1 pool):          ~462 ETH 
 Base (3 pools):              ~41 ETH 
                          ──────────────────────
-TOTAL:                   ~17,927 ETH
+TOTAL:                   ~25,295 ETH
 ```
 
 ---
