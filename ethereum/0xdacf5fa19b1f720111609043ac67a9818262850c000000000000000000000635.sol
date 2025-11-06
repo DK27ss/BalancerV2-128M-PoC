@@ -308,12 +308,12 @@ contract BalancerOsEthWethPoolTest is Test {
 
         uint256[] memory internalBalances = VAULT.getInternalBalance(ATTACKER, internalTokens);
 
-        console.log("Vault internal balances BEFORE withdrawal:");
+        console.log("VAULT BALANCE BEFORE:");
         console.log("  Internal WETH:", internalBalances[0] / 1e18, "ETH");
         console.log("  Internal BPT:", internalBalances[1] / 1e18, "ETH");
         console.log("  Internal osETH:", internalBalances[2] / 1e18, "ETH");
 
-        console.log("Attacker wallet balances BEFORE:");
+        console.log("ATTACKER BALANCE BEFORE:");
         console.log("  WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("  BPT:", IERC20(osETH_WETH_BPT).balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("  osETH:", IERC20(osETH).balanceOf(ATTACKER) / 1e18, "ETH");
