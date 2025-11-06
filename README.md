@@ -199,7 +199,7 @@ VAULT.manageUserBalance(ops);
 
 ## Pools Execution Flow
 
-### Ethereum Mainnet
+### Ethereum
 
 #### 1. osETH/WETH Pool
 ```
@@ -423,7 +423,7 @@ Type: ComposableStablePool (BPT at index 1)
 
 ---
 
-### Base Network
+### Base
 
 #### 1. rETH/WETH Pool
 ```
@@ -629,6 +629,7 @@ PoolId 0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026 (cbETH
 
 ## Post-Mortem ressources
 
+    https://research.checkpoint.com/2025/how-an-attacker-drained-128m-from-balancer-through-rounding-error-exploitation/
     https://x.com/lookonchain/status/1985258890863501820
     https://x.com/Phalcon_xyz/status/1985302779263643915/photo/1
     https://x.com/Phalcon_xyz/status/1985262010347696312
