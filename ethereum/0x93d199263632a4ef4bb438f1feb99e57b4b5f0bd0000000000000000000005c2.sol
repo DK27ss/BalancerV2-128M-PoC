@@ -381,7 +381,6 @@ contract BalancerWstEthWethPoolTest is Test {
 
         // Expected: ~1,963 WETH + ~4,259 wstETH extracted
         console.log("");
-        console.log("Expected: Pool 2 (wstETH/WETH): +1,963 WETH, +4,259 wstETH");
         console.log("SUCCESS!");
     }
     
