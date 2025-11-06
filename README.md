@@ -1,4 +1,4 @@
-# BalancerV2 Rounding Exploit - Complete Post-Mortem
+# BalancerV2 Rounding Exploit - Post-Mortem
 
 Balancer V2, a decentralized automated market maker (AMM) protocol, an attacker exploited a precision rounding vulnerability in multiple pools. The attack occurred on **Nov 3, 2025**.
 
