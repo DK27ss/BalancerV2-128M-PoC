@@ -397,7 +397,6 @@ contract BalancerOsEthWethPoolTest is Test {
 
         // Expected: ~4,623 WETH + ~6,851 osETH extracted
         console.log("");
-        console.log("Expected: Pool 1 (osETH/WETH): +4,623 WETH, +6,851 osETH");
         console.log("SUCCESS!");
     }
     
