@@ -71,47 +71,32 @@ contract BalancerExactSwapsTest is Test {
 
     // ETHEREUM
     IWETH constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
-    // Pool 1: rsETH/WETH (Ethereum)
     bytes32 constant POOL_ID_RSETH = 0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f;
     address constant rsETH_WETH_BPT = 0x58AAdFB1Afac0ad7fca1148f3cdE6aEDF5236B6D;
     address constant rsETH = 0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7;
-    // Pool 2: osETH/WETH (Ethereum)
     bytes32 constant POOL_ID_OSETH = 0xdacf5fa19b1f720111609043ac67a9818262850c000000000000000000000635;
     address constant osETH_WETH_BPT = 0xDACf5Fa19b1f720111609043ac67A9818262850c;
     address constant osETH = 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38;
-    // Pool 3: wstETH/WETH (Ethereum)
     bytes32 constant POOL_ID_WSTETH = 0x93d199263632a4ef4bb438f1feb99e57b4b5f0bd0000000000000000000005c2;
     address constant wstETH_WETH_BPT = 0x93d199263632a4EF4Bb438F1feB99e57b4b5f0BD;
     address constant wstETH = 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0;
-    // Pool 4: weETH/rETH (Ethereum)
     bytes32 constant POOL_ID_WEETH = 0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645;
     address constant weETH_rETH_BPT = 0x05ff47AFADa98a98982113758878F9A8B9FddA0a;
     address constant weETH = 0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee;
     address constant rETH = 0xae78736Cd615f374D3085123A210448E74Fc6393;
-    // Pool 5: weETH/ezETH/rswETH (Ethereum - Triple Pool)
     bytes32 constant POOL_ID_TRIPLE = 0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a;
     address constant TRIPLE_BPT = 0x848a5564158d84b8A8fb68ab5D004Fae11619A54;
     address constant ezETH = 0xbf5495Efe5DB9ce00f80364C8B423567e58d2110;
     address constant rswETH = 0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0;
-    // weETH already defined in Pool 4
-    // Pool 6: wstETH-rETH-sfrxETH-BPT #1 (Ethereum - Quad Pool)
     bytes32 constant POOL_ID_QUAD = 0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467;
     address constant QUAD_BPT = 0x5aEe1e99fE86960377DE9f88689616916D5DcaBe;
     address constant sfrxETH = 0xac3E018457B222d93114458476f3E3416Abbe38F;
-    // wstETH already defined in Pool 3
-    // rETH already defined in Pool 4
-    // Pool 7: wstETH-rETH-sfrxETH-BPT #2 (Ethereum - Quad2 Pool)
     bytes32 constant POOL_ID_QUAD2 = 0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b;
     address constant QUAD2_BPT = 0x42ED016F826165C2e5976fe5bC3df540C5aD0Af7;
-    // wstETH, sfrxETH, rETH already defined above
-    // Pool 8: ezETH-WETH-BPT (Ethereum)
     bytes32 constant POOL_ID_EZETH = 0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659;
     address constant ezETH_WETH_BPT = 0x596192bB6e41802428Ac943D2f1476C1Af25CC0E;
-    // ezETH already defined in Pool 5
-    // WETH already defined at top
 
     // ARBITRUM
-    // Pool: wstETH/rETH/cbETH (Arbitrum)
     bytes32 constant POOL_ID_ARB = 0x4a2f6ae7f3e5d715689530873ec35593dc28951b000000000000000000000481;
     address constant ARB_POOL_BPT = 0x4a2F6Ae7F3e5D715689530873ec35593Dc28951B;
     address constant ARB_cbETH = 0x1DEBd73E752bEaF79865Fd6446b0c970EaE7732f;  // Index 0
@@ -119,17 +104,14 @@ contract BalancerExactSwapsTest is Test {
     address constant ARB_rETH = 0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8;    // Index 3
 
     // BASE
-    // Pool 1: rETH/WETH (Base)
     bytes32 constant POOL_ID_BASE = 0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023;
     address constant BASE_POOL_BPT = 0xC771c1a5905420DAEc317b154EB13e4198BA97D0;
     address constant BASE_WETH = 0x4200000000000000000000000000000000000006;  // Index 0 or 1
     address constant BASE_rETH = 0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c;   // Index 1
     address constant BASE_ATTACKER = 0x56e5Adab68b594B0c2aD6C112D94AE5aCA98A001;
-    // Pool 2: weETH/wETH (Base)
     bytes32 constant POOL_ID_BASE2 = 0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118;
     address constant BASE2_POOL_BPT = 0xaB99a3e856dEb448eD99713dfce62F937E2d4D74;
     address constant BASE_weETH = 0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A;  // Index 0
-    // Pool 3: cbETH/WETH (Base)
     bytes32 constant POOL_ID_BASE3 = 0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026;
     address constant BASE3_POOL_BPT = 0xFb4C2E6E6e27B5b4a07a36360C89EDE29bB3c9B6;
     address constant BASE_cbETH = 0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22;  // Index 0
