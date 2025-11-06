@@ -4,7 +4,7 @@ Balancer V2, a decentralized automated market maker (AMM) protocol, an attacker 
 
 The attacker leveraged a rounding manipulation in BPT (Balancer Pool Token) rate calculations when pool liquidity approached zero. By executing sequences of `GIVEN_OUT` swaps with `toInternalBalance: true`, the attacker systematically drained multiple pools across multiple networks, accumulating funds in the Vault's internal balance before withdrawing everything via `manageUserBalance()` calls.
 
-The exploit abused precision loss in the Vault's `swap()` function when using `SwapKind.GIVEN_OUT`, where the attacker specifies exact output amounts and the Vault calculates required input (BPT). At minimal liquidity, rounding errors favor the attacker, allowing extraction of more tokens than BPT paid justifies.
+The exploit abused precision loss in the Vault's `swap()` function when using `SwapKind.GIVEN_OUT`, where the attacker specifies exact output amounts and the Vault calculates required input (BPT). At minimal liquidity, rounding errors favor the attacker, allowing extraction of more tokens than `BPT` paid justifies.
 
 ## Rounding Manipulation in GIVEN_OUT Swaps
 
@@ -16,7 +16,7 @@ Balancer V2 Vault supports two swap modes:
 - `GIVEN_IN` ("Given In"): the caller specifies the exact amount of the input token, and the pool calculates the corresponding output amount.
 - `GIVEN_OUT` ("Given Out"): the caller specifies the desired output amount, and the pool computes the required input amount.
 
-Typically, a batchSwap() consists of multiple token-to-token swaps executed via the onSwap() function. The following outlines the execution path when a SwapRequest is assigned a GIVEN_OUT swap type (note that ComposableStablePool inherits from BaseGeneralPool):
+Typically, a `batchSwap()` consists of multiple token-to-token swaps executed via the `onSwap()` function. The following outlines the execution path when a SwapRequest is assigned a `GIVEN_OUT` swap type (note that ComposableStablePool inherits from BaseGeneralPool):
 
 ![onSwap Control Flow](https://github.com/user-attachments/assets/a5ce90e0-7e9f-4555-bb9b-5b3ec94f64e5)
 
@@ -24,7 +24,7 @@ Each swap drains reserves → subsequent swaps have worse precision → compound
 
 ## Root Cause: Incorrect Rounding Direction
 
-The underlying issue arises from the rounding-down operation performed during upscaling in the `BaseGeneralPool._swapGivenOut()` function. In particular, `_swapGivenOut()` incorrectly rounds down swapRequest.amount through the `_upscale()` function. The resulting rounded value is subsequently used as amountOut when calculating amountIn via `_onSwapGivenOut()`. This behavior contradicts the standard practice that rounding should be applied in a manner that benefits the protocol.
+The underlying issue arises from the rounding-down operation performed during upscaling in the `BaseGeneralPool._swapGivenOut()` function. In particular, `_swapGivenOut()` incorrectly rounds down `swapRequest.amount` through the `_upscale()` function. The resulting rounded value is subsequently used as `amountOut` when calculating `amountIn` via `_onSwapGivenOut()`. This behavior contradicts the standard practice that rounding should be applied in a manner that benefits the protocol.
 
 ![Swap Given Out Vulnerability](https://github.com/user-attachments/assets/3e51746e-67b3-48c1-bbb7-c2422ee233d9)
 
@@ -53,10 +53,10 @@ For a given pool (e.g., wstETH/rETH/cbETH), the computed amountIn underestimates
 ## Attack Mechanics
 
 **Step 1:**
-The attacker swaps BPT for underlying assets to precisely adjust the balance of one token (cbETH) to the edge of a rounding boundary `(amount = 9)`. This sets up the conditions for precision loss in the next step.
+The attacker swaps `BPT` for underlying assets to precisely adjust the balance of one token (cbETH) to the edge of a rounding boundary `(amount = 9)`. This sets up the conditions for precision loss in the next step.
 
 **Step 2: Rounding Manipulation**
-The attacker then swaps between another underlying (wstETH) and `cbETH` using a crafted amount `(= 8)`. Due to rounding down when scaling token amounts, the computed Δx becomes slightly smaller `(8.918 to 8)`, leading to an underestimated Δy and thus a smaller invariant (D from Curve's StableSwap model). Since `BPT price = D / totalSupply`, the BPT price becomes artificially deflated.
+The attacker then swaps between another underlying (wstETH) and `cbETH` using a crafted amount `(= 8)`. Due to rounding down when scaling token amounts, the computed `Δx` becomes slightly smaller `(8.918 to 8)`, leading to an underestimated `Δy` and thus a smaller invariant (D from Curve's StableSwap model). Since `BPT price = D / totalSupply`, the BPT price becomes artificially deflated.
 
 Using the best candidates, SC1 constructed one long `batchSwap`. The steps alternated indices in a `4‑leg block`, indicating swaps in circular directions. Input amounts were chosen to keep balances near rounding thresholds so that repeated down‑rounding in Stable math underestimated D within the call.
 
