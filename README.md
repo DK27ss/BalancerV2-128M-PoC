@@ -69,7 +69,7 @@ The attacker reverse-swaps the underlying assets back into `BPT`, restoring bala
 
 ---
 
-### Stage 1: Initial BPT Drainage (Reduce Liquidity)
+### Stage 1: Initial BPT Drain (Reduce Liquidity)
 
 The attacker executes multiple `GIVEN_OUT` swaps to drain underlying tokens from the pool:
 
