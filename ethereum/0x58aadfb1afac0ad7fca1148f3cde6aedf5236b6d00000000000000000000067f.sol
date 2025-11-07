@@ -301,7 +301,7 @@ contract BalancerRsEthWethPoolTest is Test {
             if (additionalSwaps > 100) break; // Safety limit
         }
 
-        console.log("Additional drainage swaps:", additionalSwaps);
+        console.log("Additional swaps:", additionalSwaps);
         console.log("=== WITHDRAWAL manageUserBalance()");
 
         IERC20[] memory internalTokens = new IERC20[](3);
