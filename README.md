@@ -561,7 +561,7 @@ struct FundManagement {
     bool toInternalBalance;  // TRUE = hide in Vault until withdrawal
 }
 
-// Attacker calls:
+// Attacker calls BatchSwap() --> Vault calls swap()
 VAULT.swap(
     SingleSwap({
         poolId: POOL_ID,
