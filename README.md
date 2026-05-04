@@ -646,3 +646,12 @@ PoolId 0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026 (cbETH
     https://app.blocksec.com/explorer/tx/eth/0xd155207261712c35fa3d472ed1e51bfcd816e616dd4f517fa5959836f5b48569
     https://app.blocksec.com/explorer/tx/arbitrum/0x7da32ebc615d0f29a24cacf9d18254bea3a2c730084c690ee40238b1d8b55773
     https://app.blocksec.com/explorer/tx/eth/0x2a0ead4ee9b17a1afa5bfe3dc152833a957f2d25dd9b4b86d68f2c87bdacf69c
+
+>
+>Company : https://blockraider.xyz/
+>
+>Community : https://discord.gg/Vqqt7jyRr7
+>
+>Disclosure : https://t.me/blockraider_alerts_bot
+
+<img width="161" height="51" alt="blockraider" src="https://github.com/user-attachments/assets/dc86222a-b5fb-49e8-9a9d-350973b7521d" />
